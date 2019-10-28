@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  nginx-cerbot:
+    #image: really/nginx-certbot
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: nginx-certbot
+    restart: always
+    ports:
+      - 宿主机监听port:容器监听port
+    volumes:
+      - ./data/nginx/conf.d:/etc/nginx/conf.d:rw
+      - ./data/letsencrypt:/etc/letsencrypt:rw
+      - ./data/nginx/logs:/var/log/nginx:rw
+      - ./data/letsencrypt/logs:/var/log/letsencrypt:rw
+      - ./data/www:/www
+    logging:
+      options:
+        max-size: 50m
